@@ -1,0 +1,1 @@
+const button=document.querySelector("[data-admin-back]");button.addEventListener("click",()=>{const fallback="../index.html#/perfil";try{const previous=document.referrer?new URL(document.referrer):null;if(previous&&previous.origin===location.origin&&!previous.pathname.includes("/admin/"))history.back();else location.href=fallback}catch{location.href=fallback}});
