@@ -4,20 +4,30 @@ El selector `Sin sesión / USER / ADMIN` existe únicamente para revisar visualm
 
 ## Alcance público actual
 
-Las rutas de Inicio, Explorar, Perdidos, Encontrados, Adopciones, Poco comunes, Información y cuidados, Nuestro trabajo y Veterinarias son públicas en el prototipo. Las rutas `/poco-comunes`, `/informacion` y `/nuestro-trabajo` no dependen del rol demo.
+Inicio, Explorar, Perdidos, Encontrados, Adopciones, Fundaciones, perfiles públicos de fundación y animales, Poco comunes, Información y cuidados, Nuestro trabajo y Veterinarias son rutas públicas.
 
-Las rutas de Perfil, Publicaciones, Casos, Notificaciones y Configuración continúan siendo privadas visualmente. Un visitante es enviado al inicio de sesión. El enlace al panel administrativo solo se muestra al seleccionar `ADMIN`.
+Perfil, Publicaciones, Casos, Mis solicitudes de adopción, Mis apadrinamientos, Notificaciones y Configuración son privadas visualmente. Un visitante es enviado al login. El enlace al panel administrativo solo aparece con `ADMIN`.
+
+## Cuenta, organización y permisos
+
+- USER representa una cuenta o persona.
+- Foundation representa una organización.
+- Una Foundation no es un USER renombrado.
+- No existe `role: FOUNDATION`.
+- Varios usuarios podrán gestionar una organización mediante permisos futuros.
+- Animal representa un individuo bajo cuidado; Species describe información científica general.
 
 ## Reglas que deberá imponer FastAPI
 
-- Toda cuenta creada mediante el registro público obtiene `role = USER`.
-- El administrador principal se crea mediante un script o configuración segura del backend.
-- El perfil y sus endpoints nunca aceptan `role` como campo editable.
-- No existirán acciones de “registrarse” o “convertirse” en administrador.
-- `GET /admin` y cada endpoint bajo `/api/v1/admin/*` requieren una sesión válida y `role == ADMIN`.
-- Un USER recibe `403 Forbidden` al invocar cualquier endpoint administrativo.
-- La gestión futura de categorías, fichas, artículos, proyectos oficiales y relaciones será exclusiva de ADMIN.
-- El backend es la autoridad aunque se modifique el DOM, la URL, JavaScript o una petición.
-- Se evaluará MFA para la cuenta ADMIN antes de producción.
+- Toda cuenta creada mediante registro público obtiene `role = USER`.
+- El administrador principal se crea mediante configuración segura.
+- El perfil nunca acepta `role` como campo editable.
+- `GET /admin` y `/api/v1/admin/*` requieren sesión válida y `role == ADMIN`.
+- USER recibe `403 Forbidden` al invocar endpoints administrativos.
+- Gestionar una fundación requerirá una relación de permisos entre USER y Foundation.
+- Verificar, rechazar o suspender fundaciones requerirá ADMIN.
+- Crear o editar animales requerirá permiso sobre la Foundation responsable.
+- Crear un apadrinamiento requerirá sesión, consentimiento y validaciones reales.
+- El backend será la autoridad aunque se modifique DOM, URL o JavaScript.
 
-La interfaz `/admin/` actual es un prototipo visual y no está protegida. `useDemoData` permanece activo y ninguna navegación de esta fase equivale a autorización real.
+La interfaz `/admin/`, los estados de verificación y el apadrinamiento son demostraciones sin seguridad, persistencia ni transacciones.
