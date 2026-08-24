@@ -1,1 +1,148 @@
-.demo-role{margin:0 0 .8rem;padding:.65rem;border:1px dashed var(--faint);border-radius:var(--r-sm);background:var(--bg)}.demo-role strong,.demo-role span{display:block}.demo-role strong{font-size:.72rem}.demo-role>span{color:var(--muted);font-size:.62rem}.demo-role-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.25rem;margin-top:.5rem}.demo-role-options button{border:1px solid var(--line);border-radius:.35rem;padding:.3rem .15rem;background:var(--surface);font-size:.62rem}.demo-role-options button[aria-pressed=true]{border-color:var(--brand);background:var(--brand);color:white}.account-area{position:relative;border-top:1px solid var(--line);padding-top:1rem}.user-menu-wrap{position:relative}.user-menu-trigger{width:100%;border:0;background:transparent;text-align:left}.user-menu-name{flex:1;min-width:0}.user-menu{position:absolute;left:0;right:0;bottom:calc(100% + .55rem);z-index:45;display:grid;padding:.45rem;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--shadow)}.user-menu[hidden]{display:none}.user-menu a,.user-menu button{border:0;border-radius:.4rem;padding:.6rem .7rem;background:transparent;text-align:left;color:var(--ink-2)}.user-menu a:hover,.user-menu button:hover,.user-menu a:focus,.user-menu button:focus{background:var(--soft)}.user-menu .admin-menu-link{display:flex;justify-content:space-between;margin:.3rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;color:var(--brand);font-weight:800}.user-menu small,.menu-caption{padding:.45rem .7rem;color:var(--muted);font-size:.65rem}.guest-actions{display:grid;gap:.45rem}.back-button{margin-bottom:1rem;padding-left:0}.auth-card>.back-button{margin-bottom:1.2rem}.auth-card>.brand{margin-bottom:1.2rem}@media(max-width:800px){.demo-role{margin-top:.5rem}.user-menu{position:fixed;left:1rem;right:1rem;bottom:5rem}}
+.demo-role {
+    margin: 0 0 .8rem;
+    padding: .65rem;
+    border: 1px dashed var(--faint);
+    border-radius: var(--r-sm);
+    background: var(--bg)
+}
+
+.demo-role strong,
+.demo-role span {
+    display: block
+}
+
+.demo-role strong {
+    font-size: .72rem
+}
+
+.demo-role>span {
+    color: var(--muted);
+    font-size: .62rem
+}
+
+.demo-role-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .25rem;
+    margin-top: .5rem
+}
+
+.demo-role-options button {
+    border: 1px solid var(--line);
+    border-radius: .35rem;
+    padding: .3rem .15rem;
+    background: var(--surface);
+    font-size: .62rem
+}
+
+.demo-role-options button[aria-pressed=true] {
+    border-color: var(--brand);
+    background: var(--brand);
+    color: white
+}
+
+.account-area {
+    position: relative;
+    border-top: 1px solid var(--line);
+    padding-top: 1rem
+}
+
+.user-menu-wrap {
+    position: relative
+}
+
+.user-menu-trigger {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left
+}
+
+.user-menu-name {
+    flex: 1;
+    min-width: 0
+}
+
+.user-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + .55rem);
+    z-index: 45;
+    display: grid;
+    padding: .45rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    box-shadow: var(--shadow)
+}
+
+.user-menu[hidden] {
+    display: none
+}
+
+.user-menu a,
+.user-menu button {
+    border: 0;
+    border-radius: .4rem;
+    padding: .6rem .7rem;
+    background: transparent;
+    text-align: left;
+    color: var(--ink-2)
+}
+
+.user-menu a:hover,
+.user-menu button:hover,
+.user-menu a:focus,
+.user-menu button:focus {
+    background: var(--soft)
+}
+
+.user-menu .admin-menu-link {
+    display: flex;
+    justify-content: space-between;
+    margin: .3rem 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    color: var(--brand);
+    font-weight: 800
+}
+
+.user-menu small,
+.menu-caption {
+    padding: .45rem .7rem;
+    color: var(--muted);
+    font-size: .65rem
+}
+
+.guest-actions {
+    display: grid;
+    gap: .45rem
+}
+
+.back-button {
+    margin-bottom: 1rem;
+    padding-left: 0
+}
+
+.auth-card>.back-button {
+    margin-bottom: 1.2rem
+}
+
+.auth-card>.brand {
+    margin-bottom: 1.2rem
+}
+
+@media(max-width:800px) {
+    .demo-role {
+        margin-top: .5rem
+    }
+
+    .user-menu {
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        bottom: 5rem
+    }
+}
