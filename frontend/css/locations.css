@@ -1,0 +1,49 @@
+.location-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm)
+}
+
+.location-selector legend {
+    padding: 0 .4rem;
+    font-weight: 800
+}
+
+.municipality-results {
+    max-width: 100%
+}
+
+@media(max-width:600px) {
+    .location-selector {
+        grid-template-columns: 1fr
+    }
+
+    .location-selector .full {
+        grid-column: 1
+    }
+}
+
+.event-time {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm)
+}
+
+.event-time legend {
+    padding: 0 .4rem;
+    font-weight: 800
+}
+
+@media(max-width:600px) {
+    .event-time {
+        grid-template-columns: 1fr
+    }
+}

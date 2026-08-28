@@ -1,0 +1,89 @@
+.adoption-tools {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 16px
+}
+
+.adoption-tools label {
+    display: grid;
+    gap: 6px;
+    font-size: .8rem;
+    font-weight: 700
+}
+
+.status-line {
+    display: block;
+    color: var(--primary, #315e4d);
+    font-weight: 800;
+    margin: 8px 0
+}
+
+.foundation-animal-filter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0
+}
+
+.foundation-animal-filter .active {
+    background: var(--primary, #315e4d);
+    color: #fff
+}
+
+.demo-steps {
+    display: grid;
+    gap: 12px;
+    counter-reset: steps
+}
+
+.demo-step {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
+    align-items: start
+}
+
+.demo-step:before {
+    counter-increment: steps;
+    content: counter(steps);
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e9f3ee;
+    color: #234c3d;
+    font-weight: 800
+}
+
+.demo-step h3,
+.demo-step p {
+    margin: 0
+}
+
+.demo-step p {
+    margin-top: 3px
+}
+
+.animal-foundation-link {
+    display: inline-flex;
+    margin: 6px 0 14px
+}
+
+@media(max-width:900px) {
+    .adoption-tools {
+        grid-template-columns: 1fr 1fr
+    }
+}
+
+@media(max-width:560px) {
+    .adoption-tools {
+        grid-template-columns: 1fr
+    }
+
+    .action-comparison {
+        grid-template-columns: 1fr
+    }
+}

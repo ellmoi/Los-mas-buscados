@@ -1,0 +1,10 @@
+# Configuración local y credenciales que nunca deben publicarse.
+.env
+.env.*
+.vscode/
+
+# Residuos habituales de herramientas locales.
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
