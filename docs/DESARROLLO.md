@@ -14,6 +14,22 @@ El backend usa SQLite y sus propias sesiones. `npm run demo` lo inicia con ejemp
 
 ## Dónde cambiar cada cosa
 
+### Conservar la demo y continuar la aplicación real
+
+La demo de portafolio es una forma de ejecutar el mismo frontend, no un reemplazo del backend. Para volver al funcionamiento real, ejecuta `npm start` y abre `http://localhost:3000`: las peticiones utilizarán Node.js y SQLite. No necesitas borrar código de demostración ni cambiar datos de ejemplo por datos reales manualmente.
+
+Mantén separados los tres almacenes: navegador para Pages, `data/demo/` para la demostración con servidor y `data/` para la ejecución normal. No copies cuentas o contraseñas de ejemplo a una instalación real. Las vistas pueden compartirse; los permisos y las reglas de negocio deben seguir implementados y probados en el backend.
+
+Flujo recomendado para la segunda fase:
+
+1. Integra la primera fase mediante pull request a `main`, una vez revisada. La rama `feat/portfolio-interactive-demo` contiene la entrega de portafolio; mientras no se integre, Pages puede mostrar la versión anterior.
+2. Tras comprobar la publicación, crea una etiqueta de versión sobre el commit entregado para conservar una referencia recuperable de esta fase. No se ha creado esa etiqueta todavía.
+3. Crea ramas cortas `feat/<funcionalidad>` o `fix/<problema>` desde el `main` actualizado. Utiliza Conventional Commits y un pull request por cambio coherente.
+4. Comprueba el flujo con el backend real y la demo antes de integrar cambios compartidos. Si una función aún no se simula en Pages, identifica ese límite en la presentación.
+5. Conserva `main` presentable: el trabajo incompleto permanece en su rama hasta estar listo para revisión. No hace falta mantener dos copias divergentes del proyecto.
+
+La siguiente fase continúa sobre el código existente. No exige reiniciar el proyecto ni convertir la simulación en una base de producción.
+
 | Necesidad | Punto de entrada | Qué revisar también |
 |---|---|---|
 | Añadir una pantalla | `frontend/js/pages/` y `app.js` | Navegación en `config.js`, sesión y limpieza de eventos |

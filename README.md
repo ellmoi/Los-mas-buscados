@@ -47,6 +47,8 @@ Estas credenciales son públicas y exclusivas de la demo. Utiliza información f
 
 GitHub Pages no ejecuta Node.js ni utiliza la base SQLite. La demo reproduce recorridos para presentar el producto; no tiene paridad completa con la API. La seguridad, el correo y la persistencia del backend se comprueban ejecutando el servidor y sus pruebas.
 
+**Continuidad del proyecto:** la presentación de portafolio conserva la aplicación real. Ejecuta `npm start` para trabajar con Node.js y SQLite, o `npm run demo` para probar ese backend con ejemplos separados. La segunda fase continuará sobre este mismo código mediante ramas de trabajo y pull requests; consulta el [flujo de desarrollo](docs/DESARROLLO.md#conservar-la-demo-y-continuar-la-aplicación-real).
+
 ## Ejecutar localmente
 
 Requiere **Node.js 24.19 o posterior de la rama 24**. No necesitas `npm install`.
