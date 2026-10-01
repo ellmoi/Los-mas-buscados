@@ -28,10 +28,41 @@ export function saveDemoStore(value) {
 export function syncDemoCommentCounts(store) {
   for (const item of store.cases) {
     const body = typeof item.body === 'string' ? JSON.parse(item.body) : item.body || {};
-    body.commentCount = store.comments.filter(comment => comment.case_id === item.id && comment.status === 'visible').length;
+    const visible = store.comments.filter(comment => comment.case_id === item.id && comment.status === 'visible');
+    body.commentCount = visible.length;
+    body.commentPreview = visible.slice(-2).map(comment => ({
+      author: store.users.find(user => user.id === comment.author_id)?.name || 'Comunidad',
+      text: comment.text,
+    }));
     item.body = JSON.stringify(body);
     item.commentCount = body.commentCount;
   }
+}
+
+// Migración aditiva: completa ejemplos antiguos sin restaurar comentarios retirados.
+function enrichDemo(store) {
+  if (!store.activitySeedVersion) {
+    const examples = [
+      ['simba', 'Compartí su foto con los vecinos de Teusaquillo. Estamos pendientes.'],
+      ['sin-nombre', 'Gracias por ponerlo a salvo. Compartimos el aviso para encontrar a su familia.'],
+      ['bruno', 'Qué bonito. ¿Podemos conversar sobre sus paseos y cuidados?'],
+    ];
+    for (const [id, text] of examples) {
+      if (store.cases.some(item => item.id === id)) store.comments.push({id: 'demo-activity-' + id, case_id: id, author_id: 'demo-reader', text, status: 'visible', revision: 1, created: new Date().toISOString()});
+    }
+    // Las fotos del catálogo se sirven desde el repositorio, sin depender de Unsplash.
+    for (const item of store.cases) {
+      if (!pets.some(pet => pet.id === item.id)) continue;
+      const body = typeof item.body === 'string' ? JSON.parse(item.body) : item.body || {};
+      if (!body.photos?.length || body.photos.every(url => url.includes('images.unsplash.com'))) {
+        body.image = new URL('../assets/demo/' + item.id + '.jpg', import.meta.url).href;
+        body.photos = [body.image];
+        item.body = JSON.stringify(body);
+      }
+    }
+    store.activitySeedVersion = 1;
+  }
+  syncDemoCommentCounts(store);
 }
 const readSession = () => {
   try {
@@ -78,7 +109,7 @@ export function ensureDemoStore() {
       { id: 'demo-comment-3', case_id: 'mora', author_id: 'demo-reader', text: '¿Mora convive bien con otros gatos? Me gustaría conocer el proceso de adopción.', status: 'visible', revision: 1, created: new Date(Date.now() - 1800000).toISOString() },
     ];
     existing.commentReports ||= [];
-    syncDemoCommentCounts(existing);
+    enrichDemo(existing);
     writeStorage(existing);
     return existing;
   }
@@ -182,7 +213,7 @@ export function ensureDemoStore() {
     })),
   };
 
-  syncDemoCommentCounts(state);
+  enrichDemo(state);
   writeStorage(state);
   return state;
 }

@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {request} from '../frontend/js/services/api.js';
+import {socialCase} from '../frontend/js/components/social.js';
 
 test('Pages: sesión, registro, comentarios persistentes, moderación y contadores sin servidor', async t => {
   const keys=['window','localStorage','sessionStorage','fetch'];
@@ -13,6 +14,18 @@ test('Pages: sesión, registro, comentarios persistentes, moderación y contador
   const send=(path,body,method='POST')=>request(path,{method,body:JSON.stringify(body)});
   const samples=await request('/cases/luna/comments');assert.equal(samples.items.length,2);
   assert.ok((await request('/cases/luna')).image);
+  const feed = await request('/cases?limit=20');
+  for (const item of feed.items) {
+    assert.match(item.image, /\/assets\/demo\/[^/]+\.jpg$/);
+    assert.ok(item.commentCount > 0, item.id + ' tiene actividad de ejemplo');
+    assert.ok(item.commentPreview.length > 0);
+    assert.ok(socialCase(item).includes(item.commentPreview[0].text));
+  }
+  const again = await request('/cases?limit=20');
+  assert.deepEqual(again.items.map(item => item.commentCount), feed.items.map(item => item.commentCount));
+  const escaped = socialCase({...feed.items[0], commentPreview:[{author:'<script>',text:'<img onerror=alert(1)>'}]});
+  assert.ok(escaped.includes('&lt;script&gt;'));
+  assert.ok(!escaped.includes('<img onerror'));
   await send('/register',{name:'Visitante',email:'visitor@example.test',password:'Demo-password!'});
   await send('/logout',{});
   await send('/login',{email:'visitor@example.test',password:'Demo-password!'});
