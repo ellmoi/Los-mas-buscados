@@ -1,0 +1,38 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {request} from '../frontend/js/services/api.js';
+
+test('Pages: sesión, registro, comentarios persistentes, moderación y contadores sin servidor', async t => {
+  const keys=['window','localStorage','sessionStorage','fetch'];
+  const saved=Object.fromEntries(keys.map(key=>[key,globalThis[key]]));
+  t.after(()=>{for(const key of keys){if(saved[key]===undefined)delete globalThis[key];else globalThis[key]=saved[key];}});
+  const storage=()=>{const rows=new Map();return {getItem:key=>rows.get(key)||null,setItem:(key,value)=>rows.set(key,value)};};
+  globalThis.window={location:{hostname:'ellmoi.github.io',protocol:'https:',pathname:'/Los-mas-buscados/'}};
+  globalThis.localStorage=storage();globalThis.sessionStorage=storage();
+  globalThis.fetch=()=>{throw Error('Pages no debe solicitar una API');};
+  const send=(path,body,method='POST')=>request(path,{method,body:JSON.stringify(body)});
+  const samples=await request('/cases/luna/comments');assert.equal(samples.items.length,2);
+  assert.ok((await request('/cases/luna')).image);
+  await send('/register',{name:'Visitante',email:'visitor@example.test',password:'Demo-password!'});
+  await send('/logout',{});
+  await send('/login',{email:'visitor@example.test',password:'Demo-password!'});
+  const thread=await send('/cases/luna/conversations',{openOnly:true});
+  const message={text:'Vi a Luna cerca del parque',clientId:'message-retry-unique'};
+  await send('/conversations/'+thread.id+'/messages',message);
+  await send('/conversations/'+thread.id+'/messages',message);
+  assert.equal((await request('/conversations/'+thread.id)).items.length,1);
+  assert.equal((await request('/conversations/'+thread.id)).caseName,'Luna');
+  await send('/conversations/'+thread.id,{closed:true},'PATCH');
+  await assert.rejects(send('/conversations/'+thread.id+'/messages',{text:'Otro mensaje',clientId:'message-closed'}),error=>error.status===409);
+  const comment=await send('/cases/luna/comments',{text:'Un comentario persistente',clientId:'test-comment-unique'});
+  assert.equal((await request('/cases/luna')).commentCount,3);
+  assert.equal(JSON.parse(localStorage.getItem('buscados-demo-store-v1')).comments.find(c=>c.id===comment.id).text,'Un comentario persistente');
+  await send('/comments/'+comment.id,{text:'Texto actualizado',revision:comment.revision},'PATCH');
+  await send('/comments/'+comment.id,{status:'deleted',revision:2},'PATCH');
+  assert.equal((await request('/cases/luna/comments')).items.length,2);
+  await send('/login',{email:'demo@buscados.example',password:'Demo-Buscados-2026!'});
+  const own=await send('/cases/luna/comments',{text:'Comentario del equipo',clientId:'test-admin-unique'});
+  await send('/comments/'+own.id,{status:'deleted',revision:1},'PATCH');
+  await send('/admin/comments/'+samples.items[0].id,{status:'hidden',revision:1},'PATCH');
+  assert.equal((await request('/cases/luna')).commentCount,1);
+});

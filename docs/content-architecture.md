@@ -1,5 +1,9 @@
 # Arquitectura de contenidos de Buscados
 
+> Documento histórico del prototipo. Desde el 14 de septiembre de 2026, Información y cuidados y Nuestro trabajo usan el CMS persistente de Node/SQLite con revisión administrativa. Consulta [API y datos](API_Y_DATOS.md#cms-editorial) para el contrato actual. Las taxonomías y relaciones avanzadas descritas aquí siguen siendo propuestas.
+
+> Actualización: los casos y cuentas ya usan persistencia real y `useDemoData = false`. Las fichas, taxonomías y proyectos descritos aquí conservan su alcance editorial de prototipo. Consulta `README.md` para ejecutar la aplicación.
+
 Esta fase continúa como frontend demo y mantiene `APP_CONFIG.api.useDemoData = true`. No existe persistencia, autenticación real ni CMS.
 
 ## Fuentes de datos

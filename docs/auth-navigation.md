@@ -1,5 +1,7 @@
 # Navegación y autorización futura
 
+> Documento histórico del prototipo. Las entregas funcionales reemplazaron el selector demo por sesiones reales y añadieron moderación, auditoría y protección de `/admin/` y `/api/v1/admin/*` en Node.js. Los administradores se habilitan con `scripts/admin.mjs`. Consulta `README.md` para el estado vigente; FastAPI no es una dependencia actual.
+
 El selector `Sin sesión / USER / ADMIN` existe únicamente para revisar visualmente el frontend. Vive en memoria, se reinicia al recargar y no concede permisos. Ocultar enlaces en JavaScript tampoco constituye protección.
 
 ## Alcance público actual
